@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:warisan_budaya_mobile/data/shared_preference_manager.dart';
+import 'package:warisan_budaya_mobile/data/warisan.dart';
 
 class AddBlogScreen extends StatefulWidget {
   @override
@@ -13,9 +15,19 @@ class _AddBlogScreenState extends State<AddBlogScreen> {
 
   Future<void> _saveData() async {
     if (_formKey.currentState!.validate()) {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setString('title', _titleController.text);
-      await prefs.setString('content', _contentController.text);
+      SharedPreferencesManager prefs = await SharedPreferencesManager();
+      Warisan warisan = Warisan(
+        id: 0,
+        image: '',
+        name: _titleController.text,
+        location: '',
+        description: _contentController.text,
+        image2: '',
+        description2: '',
+        image3: '',
+        description3: '',
+      );
+      prefs.addWarisan(warisan);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Data saved successfully')),
       );
