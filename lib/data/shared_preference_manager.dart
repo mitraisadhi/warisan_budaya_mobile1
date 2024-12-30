@@ -4,20 +4,33 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'warisan.dart'; // Make sure Warisan is imported
 
 class SharedPreferencesManager {
-  // Add a Warisan to SharedPreferences
-  static Future<void> addWarisan(Warisan warisan) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    List<String> warisanList = prefs.getStringList('warisan_list') ?? [];
+  
+  late SharedPreferences prefs;
 
+  Future<SharedPreferences> init() async {
+    return prefs = await SharedPreferences.getInstance();
+  }
+
+  // Add a Warisan to SharedPreferences
+  Future<void> addWarisan(Warisan warisan) async {
+    List<String> warisanList = prefs.getStringList('warisan_list') ?? [];
+    int lastId = warisanList.isEmpty ? 0 : jsonDecode(warisanList.last)['id'];
+    warisan.id = lastId + 1;
+    
     // Add the new Warisan as a JSON string
     warisanList.add(jsonEncode(warisan.toJson()));
     await prefs.setStringList('warisan_list', warisanList);
   }
 
   // Retrieve all Warisan items as a list
-  static Future<List<Warisan>> getWarisanList() async {
+  Future<List<Warisan>> getWarisanList() async {
+    
     SharedPreferences prefs = await SharedPreferences.getInstance();
     List<String> warisanList = prefs.getStringList('warisan_list') ?? [];
+    if (warisanList.isEmpty) {
+      await initializeDataFromJson();
+      warisanList = prefs.getStringList('warisan_list') ?? [];
+    }
 
     // Convert each JSON string back to a Warisan object
     return warisanList.map((warisanJson) {
@@ -57,8 +70,8 @@ class SharedPreferencesManager {
   }
 
   // Initialize the SharedPreferences with sample data from a JSON file
-  static Future<void> initializeDataFromJson() async {
-    final String jsonString = await rootBundle.loadString('assets/warisan_data.json');
+  Future<void> initializeDataFromJson() async {
+    final String jsonString = await rootBundle.loadString('assets/json/warisan_data.json');
     final List<dynamic> warisanJsonList = jsonDecode(jsonString);
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
