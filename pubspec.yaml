@@ -1,0 +1,81 @@
+name: warisan_budaya_mobile
+description: "A new Flutter project."
+
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.5.3
+
+dependencies:
+  url_launcher: ^6.1.9
+  google_fonts: ^6.2.1
+  flutter:
+    sdk: flutter
+  flutter_launcher_icons: ^0.11.0
+  showcaseview: ^2.0.0+1
+
+  cupertino_icons: ^1.0.8
+  shared_preferences: ^2.3.4
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/logo_barong.png"
+  min_sdk_android: 21 # android min sdk min:16, default 21
+
+  flutter_lints: ^4.0.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/
+    - assets/images/logo_barong.png
+    - assets/images/sumatera_barat/
+    - assets/images/aceh/
+    - assets/images/bali/
+    - assets/images/bangka_belitung/
+    - assets/images/banten/
+    - assets/images/Barudak/
+    - assets/images/bengkulu/
+    - assets/images/D.I_Yogyakarta/
+    - assets/images/Gorontalo/
+    - assets/images/jakarta/
+    - assets/images/jambi/
+    - assets/images/jawa_tengah/
+    - assets/images/jawa_timur/
+    - assets/images/jawa_barat/
+    - assets/warisan_data.json
+    # - assets/images/logo_barong.png
+
+  # An image asset can refer to one or more resolution-specific "variants", see
+  # https://flutter.dev/to/resolution-aware-images
+
+  # For details regarding adding assets from package dependencies, see
+  # https://flutter.dev/to/asset-from-package
+
+  # To add custom fonts to your application, add a fonts section here,
+  # in this "flutter" section. Each entry in this list should have a
+  # "family" key with the font family name, and a "fonts" key with a
+  # list giving the asset and other descriptors for the font. For
+  # example:
+  # fonts:
+  #   - family: Schyler
+  #     fonts:
+  #       - asset: fonts/Schyler-Regular.ttf
+  #       - asset: fonts/Schyler-Italic.ttf
+  #         style: italic
+  #   - family: Trajan Pro
+  #     fonts:
+  #       - asset: fonts/TrajanPro.ttf
+  #       - asset: fonts/TrajanPro_Bold.ttf
+  #         weight: 700
+  #
+  # For details regarding fonts from package dependencies,
+  # see https://flutter.dev/to/font-from-package
