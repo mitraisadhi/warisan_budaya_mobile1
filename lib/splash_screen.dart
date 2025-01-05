@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:warisan_budaya_mobile/main_page.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -13,13 +12,6 @@ class _SplashscreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    // Navigasi ke halaman main_page setelah 3 detik
-    // Future.delayed(Duration(seconds: 5), () {
-    //   Navigator.push(
-    //     context,
-    //     MaterialPageRoute(builder: (context) => MainPage()),
-    //   );
-    // });
     Future.delayed(Duration(seconds: 3), () {
       Navigator.pushReplacementNamed(context, '/dashboard');
     });

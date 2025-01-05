@@ -1,58 +1,59 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:warisan_budaya_mobile/data/Warisan.dart';
+import 'package:warisan_budaya_mobile/blog_detail_page.dart';
 import 'package:warisan_budaya_mobile/data/shared_preference_manager.dart';
-import 'package:warisan_budaya_mobile/main_page.dart';
-import 'package:warisan_budaya_mobile/ProfileScreen.dart';
-import 'blog_detail_page.dart';
+import 'package:warisan_budaya_mobile/data/warisan.dart';
 
-class BlogPage extends StatefulWidget {
+class BlogScreen extends StatefulWidget {
+  const BlogScreen({super.key});
+
   @override
-  _BlogPageState createState() => _BlogPageState();
+  State<BlogScreen> createState() => _BlogScreenState();
 }
 
-class _BlogPageState extends State<BlogPage> {
-  int _selectedIndex = 1;
+class _BlogScreenState extends State<BlogScreen> {
+    SharedPreferencesManager sharedPreferencesManager =
+      SharedPreferencesManager();
+
   final TextEditingController _searchController = TextEditingController();
-  // List<Warisan> _warisanListFuture = [];
-  List<Map<String, String>> displayedData = [];
-  late Future<List<Warisan>> _warisanListFuture;
+  List<Warisan> warisanData = [];
+  List<Warisan> filteredData = [];
 
   @override
   void initState() {
     super.initState();
-  
-    _warisanListFuture = SharedPreferencesManager.getWarisanList();
-    // displayedData = List.from(_warisanListFuture); // Awalnya tampilkan semua data
+    loadWarisan();
     _searchController.addListener(_filterSearchResults);
   }
-
-  @override
-  void dispose() {
-    _searchController.dispose();
-    super.dispose();
-  }
-
   void _filterSearchResults() {
     String query = _searchController.text.toLowerCase();
 
     setState(() {
       if (query.isEmpty) {
-        displayedData = List.from(_warisanListFuture); // Show all data if query is empty
+        filteredData = warisanData; // Show all data if query is empty
       } else {
-        displayedData = data.where((item) {
-          final name = item['name']!.toLowerCase();
-          final location = item['location']!.toLowerCase();
+        filteredData = warisanData.where((item) {
+          final name = item.name.toLowerCase();
+          final location = item.location.toLowerCase();
           return name.contains(query) || location.contains(query);
         }).toList();
       }
     });
+    print(filteredData.length);
   }
 
+  Future<void> loadWarisan() async {
+    List<Warisan> loadedData = await sharedPreferencesManager.getWarisanList();
+    setState(() {
+      warisanData = loadedData;
+      filteredData = warisanData;
+    });
+  }
+  
   @override
   Widget build(BuildContext context) {
+   
     return Scaffold(
-      
       body: Column(
         children: [
           Padding(
@@ -68,6 +69,7 @@ class _BlogPageState extends State<BlogPage> {
               ),
             ),
           ),
+          
           Expanded(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -80,23 +82,23 @@ class _BlogPageState extends State<BlogPage> {
                     mainAxisSpacing: 20,
                     childAspectRatio: 0.75,
                   ),
-                  itemCount: displayedData.length,
+                  itemCount: filteredData.length,
                   itemBuilder: (context, index) {
-                    final item = displayedData[index];
+                    final item = filteredData[index];
                     return GestureDetector(
                       onTap: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (context) => BlogDetailPage(
-                              image: item['image']!,
-                              name: item['name']!,
-                              location: item['location']!,
-                              description: item['description']!,
-                              image2: item['image2']!,
-                              description2: item['description2']!,
-                              image3: item['image3']!,
-                              description3: item['description3']!,
+                              image: item.image,
+                              name: item.name,
+                              location: item.location,
+                              description: item.description,
+                              image2: item.image2,
+                              description2: item.description2,
+                              image3: item.image3,
+                              description3: item.description3,
                             ),
                           ),
                         );
@@ -122,7 +124,7 @@ class _BlogPageState extends State<BlogPage> {
                                 top: Radius.circular(10),
                               ),
                               child: Image.asset(
-                                item['image']!,
+                                item.image,
                                 width: double.infinity,
                                 height: 150,
                                 fit: BoxFit.cover,
@@ -134,7 +136,7 @@ class _BlogPageState extends State<BlogPage> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    item['name']!,
+                                    item.name,
                                     style: GoogleFonts.poppins(
                                       fontSize: 12,
                                       fontWeight: FontWeight.bold,
@@ -142,7 +144,7 @@ class _BlogPageState extends State<BlogPage> {
                                   ),
                                   SizedBox(height: 4),
                                   Text(
-                                    item['location']!,
+                                    item.location,
                                     style: GoogleFonts.poppins(
                                       fontSize: 10,
                                       color: Colors.grey[600],
@@ -150,7 +152,7 @@ class _BlogPageState extends State<BlogPage> {
                                   ),
                                   SizedBox(height: 8),
                                   Text(
-                                    item['description']!,
+                                    item.description,
                                     style: GoogleFonts.poppins(
                                       fontSize: 10,
                                     ),
@@ -171,6 +173,12 @@ class _BlogPageState extends State<BlogPage> {
           ),
         ],
       ),
+       floatingActionButton: FloatingActionButton(
+      onPressed: () {
+        Navigator.pushNamed(context, '/add');
+      },
+      child: Icon(Icons.add),
+    ),
     );
   }
 }

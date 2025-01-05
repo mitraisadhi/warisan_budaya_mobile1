@@ -1,5 +1,5 @@
 class Warisan {
-  final int id;
+  int id;
   final String image;
   final String name;
   final String location;

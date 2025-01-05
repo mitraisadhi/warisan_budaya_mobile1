@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:warisan_budaya_mobile/blog_page.dart';
-import 'package:warisan_budaya_mobile/main_page.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});

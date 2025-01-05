@@ -51,7 +51,7 @@ flutter:
     - assets/images/jawa_tengah/
     - assets/images/jawa_timur/
     - assets/images/jawa_barat/
-    - assets/warisan_data.json
+    - assets/json/warisan_data.json
     # - assets/images/logo_barong.png
 
   # An image asset can refer to one or more resolution-specific "variants", see

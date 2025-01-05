@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:warisan_budaya_mobile/HomeScreen.dart';
-import 'package:warisan_budaya_mobile/ProfileScreen.dart';
-import 'package:warisan_budaya_mobile/blog_page.dart';
+import 'package:warisan_budaya_mobile/home_screen.dart';
+import 'package:warisan_budaya_mobile/profile_screen.dart';
+import 'package:warisan_budaya_mobile/blog_screen.dart';
 
 class DashboardScreen extends StatefulWidget {
   @override
@@ -14,7 +14,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   final List<Widget> _screens = [
     HomeScreen(),
-    BlogPage(),
+    BlogScreen(),
     ProfileScreen(),
   ];
 
