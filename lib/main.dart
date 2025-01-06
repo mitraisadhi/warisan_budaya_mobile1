@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:warisan_budaya_mobile/add_blog_screen.dart';
 import 'package:warisan_budaya_mobile/dashboard_screen.dart';
+import 'package:warisan_budaya_mobile/login_page.dart';
 import 'package:warisan_budaya_mobile/splash_screen.dart';
 import 'package:warisan_budaya_mobile/blog_detail_page.dart';
 import 'package:warisan_budaya_mobile/data/shared_preference_manager.dart';
@@ -45,6 +46,8 @@ class MyApp extends StatelessWidget {
             );
           case '/add':
             return MaterialPageRoute(builder: (context) => AddBlogScreen());
+          case '/login':
+            return MaterialPageRoute(builder: (context) => LoginPage());
           default:
             MaterialPageRoute(builder: (context) => DashboardScreen());
         }

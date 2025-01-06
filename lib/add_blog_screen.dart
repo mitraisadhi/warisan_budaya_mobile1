@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:warisan_budaya_mobile/data/shared_preference_manager.dart';
 import 'package:warisan_budaya_mobile/data/warisan.dart';
 

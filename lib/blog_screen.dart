@@ -12,19 +12,34 @@ class BlogScreen extends StatefulWidget {
 }
 
 class _BlogScreenState extends State<BlogScreen> {
-    SharedPreferencesManager sharedPreferencesManager =
+  SharedPreferencesManager sharedPreferencesManager =
       SharedPreferencesManager();
 
   final TextEditingController _searchController = TextEditingController();
   List<Warisan> warisanData = [];
   List<Warisan> filteredData = [];
+  var isLoggedIn = false;
 
   @override
   void initState() {
     super.initState();
     loadWarisan();
+    checkIsUserLoggedIn();
     _searchController.addListener(_filterSearchResults);
   }
+
+  void checkIsUserLoggedIn() async {
+    var isLogin = await sharedPreferencesManager.isLoggedIn();
+    setState(() {
+      isLoggedIn = isLogin;
+    });
+  }
+
+  void _deleteItem(int id) async {
+    await sharedPreferencesManager.deleteWarisan(id);
+    loadWarisan();
+  }
+
   void _filterSearchResults() {
     String query = _searchController.text.toLowerCase();
 
@@ -39,7 +54,6 @@ class _BlogScreenState extends State<BlogScreen> {
         }).toList();
       }
     });
-    print(filteredData.length);
   }
 
   Future<void> loadWarisan() async {
@@ -49,10 +63,9 @@ class _BlogScreenState extends State<BlogScreen> {
       filteredData = warisanData;
     });
   }
-  
+
   @override
   Widget build(BuildContext context) {
-   
     return Scaffold(
       body: Column(
         children: [
@@ -69,7 +82,6 @@ class _BlogScreenState extends State<BlogScreen> {
               ),
             ),
           ),
-          
           Expanded(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -123,7 +135,7 @@ class _BlogScreenState extends State<BlogScreen> {
                               borderRadius: const BorderRadius.vertical(
                                 top: Radius.circular(10),
                               ),
-                              child: Image.asset(
+                              child: Image.network(
                                 item.image,
                                 width: double.infinity,
                                 height: 150,
@@ -162,6 +174,30 @@ class _BlogScreenState extends State<BlogScreen> {
                                 ],
                               ),
                             ),
+                            isLoggedIn
+                                ? Row(
+                                    children: [
+                                      IconButton(
+                                        icon: Icon(
+                                          Icons.delete,
+                                          color: Colors.black,
+                                        ),
+                                        onPressed: () {
+                                          _deleteItem(item.id);
+                                        },
+                                      ),
+                                      IconButton(
+                                        icon: Icon(
+                                          Icons.edit,
+                                          color: Colors.black,
+                                        ),
+                                        onPressed: () {
+                                          _deleteItem(item.id);
+                                        },
+                                      )
+                                    ],
+                                  )
+                                : Container(),
                           ],
                         ),
                       ),
@@ -173,12 +209,14 @@ class _BlogScreenState extends State<BlogScreen> {
           ),
         ],
       ),
-       floatingActionButton: FloatingActionButton(
-      onPressed: () {
-        Navigator.pushNamed(context, '/add');
-      },
-      child: Icon(Icons.add),
-    ),
+      floatingActionButton: isLoggedIn
+          ? FloatingActionButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/add');
+              },
+              child: Icon(Icons.add),
+            )
+          : Container(),
     );
   }
 }

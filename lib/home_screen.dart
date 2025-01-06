@@ -141,7 +141,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 borderRadius: const BorderRadius.vertical(
                                   top: Radius.circular(10),
                                 ),
-                                child: Image.asset(
+                                child: Image.network(
                                   item.image,
                                   width: double.infinity,
                                   height: 200,

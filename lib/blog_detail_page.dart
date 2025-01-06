@@ -47,7 +47,7 @@ class BlogDetailPage extends StatelessWidget {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(10),
-                child: Image.asset(
+                child: Image.network(
                   image,
                   width: double.infinity,
                   height: 300,
@@ -81,7 +81,7 @@ class BlogDetailPage extends StatelessWidget {
               SizedBox(height: 10),
               ClipRRect(
                 borderRadius: BorderRadius.circular(10),
-                child: Image.asset(
+                child: Image.network(
                   image2,
                   width: double.infinity,
                   height: 300,
@@ -99,7 +99,7 @@ class BlogDetailPage extends StatelessWidget {
               SizedBox(height: 15),
               ClipRRect(
                 borderRadius: BorderRadius.circular(10),
-                child: Image.asset(
+                child: Image.network(
                   image3,
                   width: double.infinity,
                   height: 300,
